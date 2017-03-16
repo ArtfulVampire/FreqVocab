@@ -19,4 +19,5 @@ DISTFILES += \
     allUTF.txt \
     words.txt \
     words1.txt \
-    singleSolution.txt
+    singleSolution.txt \
+    singleSolutionNew.txt

@@ -132,11 +132,6 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	///
-	for(int i = 0; i < eraseIndices.size(); ++i)
-	{
-		std::cout << words[eraseIndices[i]].num << std::endl;
-	}
 	eraseItems(words, eraseIndices);
 
 
