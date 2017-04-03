@@ -29,7 +29,6 @@ bool operator< (const Word & in1, const Word & in2)
 //	std::cout << in1.alpab << "   " << in2.alpab << std::endl;
 	for(int i = 0; i < std::min(in1.alpab.size(), in2.alpab.size()); ++i)
 	{
-//		std:: cout << in1.alpab[i].unicode() << "   " << in2.alpab[i].unicode() << std::endl;
 		if(in1.alpab[i].unicode() < in2.alpab[i].unicode())
 		{
 			return true;
@@ -39,7 +38,6 @@ bool operator< (const Word & in1, const Word & in2)
 			return false;
 		}
 	}
-//	std::cout << " more" << std::endl;
 	return false;
 }
 
