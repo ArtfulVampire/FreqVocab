@@ -1,7 +1,7 @@
 QT += core
 QT -= gui
 
-CONFIG += c++11
+CONFIG += c++1z
 
 TARGET = FreqVocabular
 CONFIG += console
@@ -20,4 +20,6 @@ DISTFILES += \
     words.txt \
     words1.txt \
     singleSolution.txt \
-    singleSolutionNew.txt
+    singleSolutionCleaned1.txt \
+    singleSolutionCleaned2.txt \
+    singleSolutionCleaned3.txt

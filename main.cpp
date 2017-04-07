@@ -69,53 +69,16 @@ void eraseItems(std::vector<T> & inVect,
 }
 template void eraseItems(std::vector<Word> & inVect, const std::vector<int> & indices);
 
-int main(int argc, char *argv[])
+void cleanDoubleSolution(std::vector<Word> & words)
 {
-	QCoreApplication a(argc, argv);
-
-	const QString projPath = "../FreqVocabular";
-
-	QFile inFile(projPath + "/allNounsNoDoubleNoSeldom.txt");
-	inFile.open(QIODevice::ReadOnly);
-	QTextStream inStream(&inFile);
-
-	QFile outFile(projPath + "/singleSolution.txt");
-	outFile.open(QIODevice::WriteOnly);
-	QTextStream outStream(&outFile);
-
-
-	std::vector<Word> words;
-
-	QString str;
-	int num = 0;
-	while(!inStream.atEnd())
-	{
-		str = inStream.readLine();
-		if(str.size() != 6) break;
-		QString tmp = str;
-		std::sort(std::begin(tmp), std::end(tmp));
-		words.push_back(Word(str, tmp, num++));
-	}
-	inFile.close();
-
 
 	/// sort by alpab
 	std::sort(std::begin(words), std::end(words));
-
-
-//	for(const Word & in : words)
-//	{
-//		outStream << in.num << "\t"
-//				  << in.init << "\t"
-//				  << in.alpab << "\r\n";
-//	}
-//	outFile.close();
 
 	/// set to erase
 	std::vector<int> eraseIndices;
 	for(int i = 0; i < words.size() - 1; ++i)
 	{
-//		std::cout << i << std::endl;
 		if(words[i + 1].alpab == words[i].alpab)
 		{
 			eraseIndices.push_back(i);
@@ -132,14 +95,64 @@ int main(int argc, char *argv[])
 
 	eraseItems(words, eraseIndices);
 
-
-
 	std::sort(std::begin(words), std::end(words),
 			  [](const Word & in1, const Word & in2)
 	{
 		return in1.num < in2.num;
 	});
+}
 
+void cleanByRegExp(std::vector<Word> & words, QRegExp reg)
+{
+
+	std::vector<int> eraseIndices;
+
+	for(int i = 0; i < words.size(); ++i)
+	{
+		if(words[i].init.contains(reg)) eraseIndices.push_back(i);
+	}
+	eraseItems(words, eraseIndices);
+}
+
+int main(int argc, char *argv[])
+{
+	QCoreApplication a(argc, argv);
+	const QString projPath = "../FreqVocabular";
+
+
+
+	QFile inFile(projPath + "/singleSolutionCleaned2.txt");
+	inFile.open(QIODevice::ReadOnly);
+	QTextStream inStream(&inFile);
+
+	QFile outFile(projPath + "/singleSolutionCleaned3.txt");
+	outFile.open(QIODevice::WriteOnly);
+	QTextStream outStream(&outFile);
+
+
+
+	std::vector<Word> words;
+
+	/// read file
+	QString str;
+	int num = 0;
+	while(!inStream.atEnd())
+	{
+		str = inStream.readLine();
+		if(str.size() != 6) break;
+		QString tmp = str;
+		std::sort(std::begin(tmp), std::end(tmp));
+		words.push_back(Word(str, tmp, num++));
+	}
+	inFile.close();
+
+
+	cleanByRegExp(words, QRegExp("[шх]"));
+
+
+
+
+	/// write file
 	for(const Word & in : words)
 	{
 		outStream  << in.init << "\r\n";
