@@ -22,4 +22,5 @@ DISTFILES += \
     singleSolution.txt \
     singleSolutionCleaned1.txt \
     singleSolutionCleaned2.txt \
-    singleSolutionCleaned3.txt
+    singleSolutionCleaned3.txt \
+    singleSolutionCleaned4.txt
